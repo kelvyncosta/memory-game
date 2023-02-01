@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-900 text-gray-100 px-6 py-4;
+  -webkit-font-smoothing: antialiased;
+}
+
+body, input, button {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 400;
+}
+
+/* CARD */
+.card {
+  @apply w-32 h-48 relative rounded-xl;
+  transform-style: preserve-3d;
+  perspective: 500px;
+  transition: transform 500ms;
+  transform: scale(1)
+}
+
+.card .face {
+  @apply absolute top-0 left-0 w-full h-full rounded-xl;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  transform-style: preserve-3d;
+  transition: all 500ms;
+  backface-visibility: hidden;
+}
+
+.card .face img {
+  @apply rounded-xl;
+}
+
+.card.flipped .face.back {
+  transform: rotateY(180deg);
+}
+
+.card.flipped .face.front {
+  transform: rotateY(360deg);
+}
+
+.card .face.front {
+  transform: rotateY(180deg);
+}
+
+.card.shrunken {
+  transform: scale(0);
+}
