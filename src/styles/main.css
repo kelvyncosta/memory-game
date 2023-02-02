@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gray-900 text-gray-100 px-6 py-4;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -18,12 +17,12 @@ body, input, button {
   transform-style: preserve-3d;
   perspective: 500px;
   transition: transform 500ms;
-  transform: scale(1)
+  transform: scale(1);
 }
 
 .card .face {
   @apply absolute top-0 left-0 w-full h-full rounded-xl;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   transform-style: preserve-3d;
   transition: all 500ms;
   backface-visibility: hidden;
@@ -47,4 +46,12 @@ body, input, button {
 
 .card.shrunken {
   transform: scale(0);
+}
+
+.option__card__image {
+  @apply w-40 h-52 cursor-pointer;
+}
+
+.option__card__image.selected {
+  @apply border-4 border-red-400
 }
