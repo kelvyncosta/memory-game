@@ -3,14 +3,13 @@ import { useCallback } from 'react';
 
 import { ICard } from 'interfaces/Card';
 
-import backFace from 'assets/images/lotr/back.png';
-
 interface ICardProps {
   card: ICard;
+  back: string;
   callback(card: ICard): void;
 }
 
-export function Card({ card, callback }: ICardProps) {
+export function Card({ card, back, callback }: ICardProps) {
   const handleClick = useCallback(() => {
     if (card.clickable) {
       callback(card);
@@ -27,7 +26,7 @@ export function Card({ card, callback }: ICardProps) {
     <div className={classNames} onClick={handleClick} aria-hidden="true">
       <div className="face back">
         <img
-          src={backFace}
+          src={back}
           alt="Card back face"
           className="w-32 h-48 object-fill"
         />

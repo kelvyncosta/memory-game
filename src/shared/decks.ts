@@ -1,33 +1,28 @@
 import { ICard } from 'interfaces/Card';
 
-// LOTR Images
-import lotr01 from 'assets/images/lotr/01.jpg';
-import lotr02 from 'assets/images/lotr/02.jpg';
-import lotr03 from 'assets/images/lotr/03.jpg';
-import lotr04 from 'assets/images/lotr/04.jpg';
-import lotr05 from 'assets/images/lotr/05.jpg';
-import lotr06 from 'assets/images/lotr/06.jpg';
-import lotr07 from 'assets/images/lotr/07.jpg';
-import lotr08 from 'assets/images/lotr/08.jpg';
-import lotr09 from 'assets/images/lotr/09.jpg';
+import { generateId } from 'shared/utils/generateId';
+import { shuffleCards } from 'shared/utils/shuffleCards';
 
-import { shuffleCards } from './utils/shuffleCards';
-import { generateId } from './utils/generateId';
+// Back Card Images
+import lotrBack from 'assets/images/card-backs/back-lotr.png';
+import swBack from 'assets/images/card-backs/back-sw.jpg';
+import prBack from 'assets/images/card-backs/back-pr.jpg';
 
-const lotrImages = [
-  lotr01,
-  lotr02,
-  lotr03,
-  lotr04,
-  lotr05,
-  lotr06,
-  lotr07,
-  lotr08,
-  lotr09,
-];
+import { imagesLotr, imagesPowerRangers, imagesStarWars } from './decksImages';
 
-const createDeck = (images: string[]) => {
-  const cards: ICard[] = images.map((image, index) => ({
+export type DeckTypes = 'lotr' | 'starWars' | 'powerRangers';
+
+export interface Deck {
+  id: string;
+  type: DeckTypes;
+  title: string;
+  images: string[];
+  cards: ICard[];
+  back: string;
+}
+
+const createDeck = (deck: Deck) => {
+  const cards: ICard[] = deck.images.map((image, index) => ({
     cardId: index,
     image,
     clickable: true,
@@ -35,11 +30,42 @@ const createDeck = (images: string[]) => {
     hidden: false,
   }));
 
-  const completeDeck = cards
+  const allCards = cards
     .concat(cards)
     .map(card => ({ ...card, id: generateId() }));
 
-  return shuffleCards(completeDeck);
+  return { ...deck, cards: shuffleCards(allCards) };
 };
 
-export const lotrDeck = createDeck(lotrImages);
+const lotrDeck: Deck = {
+  id: generateId(),
+  type: 'lotr',
+  title: 'Lord of the Rings',
+  images: imagesLotr,
+  cards: [],
+  back: lotrBack,
+};
+
+const starWarsDeck: Deck = {
+  id: generateId(),
+  type: 'starWars',
+  title: 'Star Wars',
+  images: imagesStarWars,
+  cards: [],
+  back: swBack,
+};
+
+const powerRangersDeck: Deck = {
+  id: generateId(),
+  type: 'powerRangers',
+  title: 'Power Rangers',
+  images: imagesPowerRangers,
+  cards: [],
+  back: prBack,
+};
+
+export const DECKS = {
+  lotr: createDeck(lotrDeck),
+  starWars: createDeck(starWarsDeck),
+  powerRangers: createDeck(powerRangersDeck),
+};
